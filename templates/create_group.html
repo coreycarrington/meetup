@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block style %}
+<style>
+.col-lg-10 {
+    margin-bottom: 45px;
+}
+
+label {
+    padding-top: 10px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    {% for error in errors %}
+        <div class="alert alert-danger alert-dismissable" role="alert">
+          <span class="sr-only">Error:</span>
+          {{ error }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+        </div>
+    {% endfor %}
+    <div class="col-md-6 col-md-offset-3">
+        <h1 class="header">Create Group</h1>
+        <form method="POST" action="/create/group">
+            <div class="form-group">
+                <label for="inputName" class="col-lg-2 control-label">Name</label>
+                <div class="col-lg-10">
+                    <input name="name" type="text" class="form-control" id="inputName" placeholder="Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputDesc" class="col-lg-2 control-label">Description</label>
+                <div class="col-lg-10">
+                    <textarea name="description" class="form-control" rows="3" id="inputDesc"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputCategory" class="col-lg-2 control-label">Category</label>
+                <div class="col-lg-10">
+                    <input name="category" type="text" class="form-control" id="inputCategory" placeholder="Category">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-2">
+                    <button type="reset" class="btn btn-default">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

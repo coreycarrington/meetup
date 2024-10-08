@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Welcome to Meetup!</h1>
+
+    <h2>Group Interests</h2>
+    <div class="row">
+    <form method="POST" action="/">
+      <input type="hidden" name="type" value="group">
+        <div class="form-group">
+            <label for="select" class="col-lg-2 control-label">Group Interests</label>
+            <select class="col-lg-2" name="interest" class="form-control" id="select">
+                {% for interest in interests %}
+                <option value="{{ interest[0] }}">{{ interest[0] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+      <div class="form-group">
+          <div class="col-lg-10 col-lg-offset-2">
+              <button type="reset" class="btn btn-default">Cancel</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+      </div>
+    </form>
+    </div>
+    <h2>Groups</h2>
+    {% if groups|length > 0 %}
+      {% for group in groups %}
+        <h4>{{ group[1] }}</h4>
+        <p>{{ group[2]}}</p>
+        <p>Creator: {{ group[3] }}</p>
+        <p>Category: {{ group[4] }}</p>
+        <hr />
+      {% endfor %}
+    {% else %}
+      <p>No groups have that interest</p>
+    {% endif %}
+
+    <h1 class="header">Search Event</h1>
+    <form method="POST" action="/">
+      <input type="hidden" name="type" value="event">
+      <div class="form-group">
+          <label for="inputName" class="col-lg-2 control-label">Event Start</label>
+          <div class="col-lg-10">
+              <input name="starttime" type="text" class="form-control" id="inputName" placeholder="Start Time" value="{{ start_time }}">
+          </div>
+      </div>
+      <div class="form-group">
+          <label for="inputName" class="col-lg-2 control-label">Event End</label>
+          <div class="col-lg-10">
+              <input name="endtime" type="text" class="form-control" id="inputName" placeholder="End Time" value="{{ end_time }}">
+          </div>
+      </div>
+      <div class="form-group">
+          <div class="col-lg-10 col-lg-offset-2">
+              <button type="reset" class="btn btn-default">Cancel</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+      </div>
+    </form>
+
+    <h2>Events</h2>
+    {% if events|length > 0 %}
+      {% for result in events %}
+      <div class="row">
+        <div class="col-md-2">
+          <h3>Hosted by: {{ result[13] }}</h3>
+        </div>
+        <div class="col-md-5">
+            <h3>{{ result[1] }}</h3>
+            <p>{{ result[2] }}</p>
+            <p>{{ result[3]|datetime }} to {{ result[4]|datetime }}</p>
+        </div>
+        <div class="col-md-5">
+            <h3>Location</h3>
+            <p>Name: {{ result[6] }}</p>
+            <p>Street: {{ result[8] }} | City: {{ result[9] }} | Zip: {{ result[7] }}</p>
+            <p>Description: {{ result[10] }}</p>
+            <p>Lat: {{ result[11] }} Long: {{ result[12] }}</p>
+        </div>
+      </div>
+        <hr />
+      {% endfor %}
+    {% else %}
+      <p>No events match search</p>
+    {% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

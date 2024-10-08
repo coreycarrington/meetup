@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+    {% if msg %}
+        <div class="alert alert-danger alert-dismissable" role="alert">
+          <span class="sr-only">Error:</span>
+          {{ msg }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+        </div>
+    {% endif %}
+    <h1 class="header">Search Events</h1>
+    <form method="POST" action="/search/event">
+      <div class="form-group">
+          <label for="inputName" class="col-lg-2 control-label">Search</label>
+          <div class="col-lg-10">
+              <input name="search" type="text" class="form-control" id="inputName" placeholder="Search" value={{ search }}>
+          </div>
+          <div class="form-group">
+              <div class="col-lg-10 col-lg-offset-2">
+                  <button type="reset" class="btn btn-default">Cancel</button>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+          </div>
+      </div>
+    </form>
+    {% if results|length > 0 %}
+	    {% for result in results %}
+	    <div class="row">
+	      <div class="col-md-2">
+	        <h3>Hosted by: {{ result[13] }}</h3>
+	        <form method="POST" action="/join/event">
+	            <input type="hidden" name="eventid" value="{{ result[0] }}" />
+	            <div class="form-group">
+	                <div class="col-lg-10 col-lg-offset-2">
+	                    <button type="submit" class="btn btn-primary">RSVP</button>
+	                </div>
+	            </div>
+	        </form>
+	      </div>
+	      <div class="col-md-5">
+	          <h3>{{ result[1] }}</h3>
+	          <p>{{ result[2] }}</p>
+	          <p>{{ result[3]|datetime }} to {{ result[4]|datetime }}</p>
+	      </div>
+	      <div class="col-md-5">
+	          <h3>Location</h3>
+	          <p>Name: {{ result[6] }}</p>
+	          <p>Street: {{ result[8] }} | City: {{ result[9] }} | Zip: {{ result[7] }}</p>
+	          <p>Description: {{ result[10] }}</p>
+	          <p>Lat: {{ result[11] }} Long: {{ result[12] }}</p>
+	      </div>
+	    </div>
+	      <hr />
+	    {% endfor %}
+    {% else %}
+	    <p>No events match search</p>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
